@@ -7,13 +7,15 @@ const subjectSchema = new mongoose.Schema({
         type: String,
         unique: true,
         maxlength: 10,
-        required: true
+        required: true,
+        trim: true,
     },
     description: {
         type: String,
         minlength: 5,
         maxlength: 50,
-        required: true
+        required: true,
+        trim: true,
     },
     videos: [
         {
@@ -34,9 +36,7 @@ const subjectSchema = new mongoose.Schema({
     ],
     exames: [
         {
-            subjectName: {
-                type: String,
-            }
+            exam: { type: String }
         }
     ]
 })

@@ -5,8 +5,9 @@
         [register] - [add video] - [delete video] - [add test] - [allCourses] - [singleCourse] - [edit profile]
 
     - Admin :
-        [adminLogin] - [show all teacher[with all operations]] - //[add new subject]// - [add subject to teacher]
-        [delete new subject] - [delete subject from teacher] - [delete video] - [block user]
+        //[adminLogin]// - [show all teacher[with all operations]] - //[add new subject]// -
+        [add subject to teacher]
+        //[delete new subject]// - [delete subject from teacher] - [delete video] - [block user]
 
     (show all teacher) => [Active teacher] - [delete] - [add Subject] - [show single teacher]
 
