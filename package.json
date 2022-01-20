@@ -1,7 +1,6 @@
 {
   "name": "e-learning-project",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +17,14 @@
     "nodemailer": "^6.7.2",
     "otp-generator": "^4.0.0",
     "validator": "^13.7.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monashazly/e-learning.git"
+  },
+  "bugs": {
+    "url": "https://github.com/monashazly/e-learning/issues"
+  },
+  "homepage": "https://github.com/monashazly/e-learning#readme",
+  "description": ""
 }
