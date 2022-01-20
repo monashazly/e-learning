@@ -1,6 +1,6 @@
-class Student {
+/*class Student {
    
 
 
 }
-module.exports=Student
+module.exports=Student*/

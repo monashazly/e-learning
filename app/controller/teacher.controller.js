@@ -1,4 +1,4 @@
-class Teacher{
+/*class Teacher{
 
 }
-module.exports=Teacher
+module.exports=Teacher*/
