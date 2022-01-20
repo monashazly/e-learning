@@ -1,17 +1,16 @@
 const router=require("express").Router()
-const TeacherController=require("../app/controller/teacher.controller")
+const teacherController=require("../app/controller/teacher.controller")
 const teacherModel=require("../models/teacher.model");
 
-router.post("/pendingTeacher",async(req, res)=>{
-    try{
-        let teacher = new teacherModel(req.body)
-        await teacher.save()
-        res.send(teacher)
-    }
-    catch(e){
-        res.send(e)
-    }
-})
+// [register] - [add video] - [delete video] - [add test] - [allCourses] - [singleCourse] - [edit profile]
+
+router.post("/pendingTeacher",teacherController.pendingTeacher)
+
+router.post("/postVideo/:subject",teacherController.postVideo)
+
+router.delete("/deleteVideo/:subject/:videoName",teacherController.deleteVideo)
+
+// router.post("/postTest/:subject",teacherController.addTest);
 
 
 module.exports = router
