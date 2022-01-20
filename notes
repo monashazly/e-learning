@@ -5,14 +5,16 @@
         [register] - [add video] - [delete video] - [add test] - [allCourses] - [singleCourse] - [edit profile]
 
     - Admin :
-        [adminLogin] - [add teacher] - [delete teacher] - [add new subject] - [add subject to teacher]
+        [adminLogin] - [show all teacher[with all operations]] - [add new subject] - [add subject to teacher]
         [delete new subject] - [delete subject from teacher] - [delete video] - [block user]
 
+    (show all teacher) => [Active teacher] - [delete] - [add Subject] - [show single teacher]
+
 [models] => [student][techers][admin][subject]
-student => name - email - password - subjects [{subjectname,grades}]
-techer => name - email - password - subjects [{subjectname,exames,src:[{videoName,link,views:[]}]}]
+student => name - email - password - subjects [ {subjectname,grades} ]
+techer => name - email - password - subjects [{ subjectname}]
 admin => name - email - password
-subject => name - description
+subject => name - description - videos [{videoName,link,views: [] }] - exames []
 
     <video src=''></video>
 
