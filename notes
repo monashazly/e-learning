@@ -1,15 +1,16 @@
 [Routes] - Student :
+
 [register] - [login] - [myCourses] - [profile] - [edit Profile] - [exames] - [add course] - [delete course]
 
     - Teacher :
         [register] - [add video] - [delete video] - [add test] - [allCourses] - [singleCourse] - [edit profile]
 
     - Admin :
-        //[adminLogin]// - [show all teacher[with all operations]] - //[add new subject]// -
+        [adminLogin] - [show all teacher[with all operations]] - [add new subject] -
         [add subject to teacher]
-        //[delete new subject]// - [delete subject from teacher] - [delete video] - [block user]
+        [delete new subject] - [delete subject from teacher] - [delete video] - [block user]
 
-    (show all teacher) => //[Active teacher]// - [delete] - [add Subject] - //[show single teacher]//
+    (show all teacher) => [Active teacher] - [delete] - [add Subject] - [show single teacher]
 
 [models] => [student][techers][admin][subject]
 student => name - email - password - subjects [ {subjectname,grades} ]
@@ -19,3 +20,25 @@ subject => name - description - videos [{videoName,link,views: [] }] - exames []
 
 git checkout -b <newBranch>
 git branch --set-upstream-to=origin/main <new Branch>
+
+// curent
+
+[Routes] - Student :
+
+[myCourses] - [exames] - [add course] - [delete course]
+
+    - Teacher :
+
+[add test] - [allCourses] - [singleCourse] - [edit profile]
+
+    - Admin :
+
+[show all teacher[with all operations]] - [delete subject from teacher] - [delete video] - [block user]
+
+    (show all teacher) => [block teacher] - [add Subject]
+
+[models] => [student][techers][admin][subject]
+student => name - email - password - subjects [ {subjectname,grades} ]
+techer => name - email - password - subjects [{ subjectname}]
+admin => name - email - password
+subject => name - description - videos [{videoName,link,views: [] }] - exames []
