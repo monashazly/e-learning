@@ -1,7 +1,8 @@
 const studentModel = require('../../models/studentmodel')
-const bycryptjs =require("bcryptjs")
+const bycryptjs = require("bcryptjs")
 class Student {
-  //  - [myCourses] - [profile] - [edit Profile] - [exames] - [add course] - [delete course]-show single
+  //  - //[myCourses]// - [profile] - [edit Profile] - //[exames]//
+  //[add course]// - [delete course]
   static PostRegister = async (req, res) => {
     try {
       let student = new studentModel(req.body)
@@ -37,18 +38,20 @@ class Student {
       })
     }
   }
-  static getEditProfile=async(req,res)=>{
-  try{    const student =await studentModel.findOne({_id:req.params.id})
-      student.name=req.body.name
- student.password=await bycryptjs.hash(req.body.password,parseInt(process.env.PASSWORDHASH))
+  static getEditProfile = async (req, res) => {
+    try {
+      const student = await studentModel.findOne({ _id: req.params.id })
+      student.name = req.body.name
+      student.password = await bycryptjs.hash(req.body.password, parseInt(process.env.PASSWORDHASH))
       student.save()
       res.send({
-          data:student
-      })}
-      catch(e){
-          res.send(e.message)
-      }
-      //upload photo
+        data: student
+      })
+    }
+    catch (e) {
+      res.send(e.message)
+    }
+    //upload photo
   }
 }
 module.exports = Student
