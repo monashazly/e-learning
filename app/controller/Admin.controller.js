@@ -16,6 +16,8 @@ class admin {
     static me = async (req, res) => {
         res.status(200).send({ apiStatus: true, data: req.user, message: "data featched" })
     }
+
+
     static postAddSubject = async (req, res) => {
         try {
             let subject = new subjectModel(req.body);
@@ -26,8 +28,6 @@ class admin {
             resData(res, 500, false, e.message, 'faild in add subject')
         }
     }
-
-
     static delMainSubject = async (req, res) => {
         try {
             let _id = req.params.id;
