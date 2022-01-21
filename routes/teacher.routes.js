@@ -2,15 +2,17 @@ const router = require("express").Router()
 const teacherController = require("../app/controller/teacher.controller")
 
 
-// [register] - [add video] - [delete video] - [add test] - [allCourses] - [singleCourse] - [edit profile]
+// [register] - [add test] - [allCourses] - [singleCourse] 
 
 router.post("/pendingTeacher", teacherController.pendingTeacher)
 
-router.post("/postVideo/:subject", teacherController.postVideo)
+router.post("/postVideo/:id", teacherController.postVideo)
 
-router.delete("/deleteVideo/:subject/:videoName", teacherController.deleteVideo)
+router.delete("/deleteVideo/:id/:videoName", teacherController.deleteVideo)
 
+router.get("/showTeacherProfile/:id",teacherController.showProfile)
 
+router.post("/editTeacherProfile/:id",teacherController.editProfile)
 
 
 module.exports = router
