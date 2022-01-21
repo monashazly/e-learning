@@ -42,7 +42,7 @@ class Home {
             try {
                 let teacher = await teacherModel.login(req.body.email, req.body.password)
                 let token = await teacher.generateToken()
-                teacher.tokens.push(token)
+                teacher.tokens.push({token})
                 await teacher.save()
                 resData(res, 200, true, teacher, 'logged in successfully')
             } catch (e) {
