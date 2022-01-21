@@ -17,7 +17,8 @@ const studentSchema = new mongoose.Schema({
         unique: true,
         validate(value) {
             if (!validator.isEmail(value)) throw new Error("invalid email format")
-        }
+        },
+
     },
     password: {
         type: String,
@@ -33,7 +34,7 @@ const studentSchema = new mongoose.Schema({
         grade: {}
     }],
     tokens: [{
-        tokens: {
+        token: {
             type: String,
             required: true
         }
@@ -60,9 +61,8 @@ studentSchema.statics.login = async function (Email, password) {
 //generate token
 studentSchema.methods.GenerateToken = async function () {
     const student = this
-    const token = await jwt.sign({ _id: student._id }, process.env.TOKENHASHSECRET)
+    const token = await jwt.sign({ _id: student._id, type: 'student' }, process.env.TOKENHASHSECRET)
     return token
-
 }
 const Student = mongoose.model("Student", studentSchema)
 module.exports = Student

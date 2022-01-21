@@ -1,26 +1,10 @@
 const req = require("express/lib/request")
 const subjectModel = require("../../models/subject.model")
 const teacherModel = require("../../models/teacher.model");
-
-const resData = (res, statusCode, apiStatus, data, message) => {
-    res.status(statusCode).send({
-        apiStatus,
-        data,
-        message,
-    })
-}
+const resData = require('../helper/resData')
 
 class Teacher {
-    static pendingTeacher = async (req, res) => {
-        try {
-            let teacher = new teacherModel(req.body)
-            await teacher.save()
-            res.send(teacher)
-        }
-        catch (e) {
-            res.send(e.message)
-        }
-    }
+
     static postVideo = async (req, res) => {
         try {
             let subject = await subjectModel.findOne({ _id: req.params.id });

@@ -4,7 +4,9 @@ const teacherController = require("../app/controller/teacher.controller")
 
 // [register] - [add test] - [allCourses] - [singleCourse] 
 
-router.post("/pendingTeacher", teacherController.pendingTeacher)
+
+
+// english 
 
 router.post("/postVideo/:id", teacherController.postVideo)
 
