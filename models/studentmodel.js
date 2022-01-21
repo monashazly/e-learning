@@ -2,8 +2,9 @@ const mongoose = require("mongoose")
 const validator = require("validator")
 const bycryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const studentSchema = new mongoose.Schema({
 
+
+const studentSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,

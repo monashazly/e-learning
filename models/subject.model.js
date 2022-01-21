@@ -21,9 +21,11 @@ const subjectSchema = new mongoose.Schema({
         {
             videoName: {
                 type: String,
+                trim: true
             },
             link: {
-                type: String
+                type: String,
+                trim: true
             },
             views: [
                 {
@@ -39,7 +41,7 @@ const subjectSchema = new mongoose.Schema({
             exam: { type: String }
         }
     ]
-})
+}, { timestamps: true })
 
 
 

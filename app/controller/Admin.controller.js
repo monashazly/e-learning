@@ -1,21 +1,12 @@
 const subjectModel = require('../../models/subject.model')
-const otpGenerator = require('otp-generator')
-const adminModel = require('../../models/Admin.model')
-
-
-const resData = (res, statusCode, apiStatus, data, message) => {
-    res.status(statusCode).send({
-        apiStatus,
-        data,
-        message,
-    })
-}
+const teacherModel = require('../../models/teacher.model')
+const resData = require('../helper/resData')
 
 class admin {
     static login = async (req, res) => {
         try {
             let admin = await adminModel.loginAdmin(req.body.email, req.body.password)
-            let token = await adminModel.generateToken()
+            let token = await admin.generateToken()
             res.status(200).send({ apiStatus: true, data: { admin, token }, message: "logged in" })
         }
         catch (e) {
@@ -48,6 +39,40 @@ class admin {
         }
     }
 
+    static getAllTeachers = async (req, res) => {
+        try {
+            let teachers = await teacherModel.find({});
+            if (teachers.length == 0) return resData(res, 200, true, teachers, 'No teachers yet')
+            resData(res, 200, true, teachers, 'data fetched Successfuly')
+        } catch (e) {
+            resData(res, 500, false, e.message, 'faild in fetch Data')
+        }
+    }
+
+
+    static getTeacher = async (req, res) => {
+        try {
+            let _id = req.params.id
+            let teacher = await teacherModel.find({ _id })
+            if (!teacher) return resData(res, 200, true, teacher, 'No teacher matched')
+            resData(res, 200, true, teacher, 'data fetched Successfuly')
+        } catch (e) {
+            resData(res, 500, false, e.message, 'faild in fetch Data')
+        }
+    }
+
+
+    static activeTeacher = async (req, res) => {
+        try {
+            let _id = req.params.id
+            let teacher = await teacherModel.findOneAndUpdate({ _id }, { active: true })
+            if (!teacher) return resData(res, 200, true, teacher, 'this teacher is not register make new account')
+            if (teacher.active === 'true') return resData(res, 200, true, teacher, 'this teacher is already active')
+            resData(res, 200, true, teacher, 'this teacher actived successfuly')
+        } catch (e) {
+            resData(res, 500, false, e.message, 'faild in fetch Data')
+        }
+    }
 }
 
 
