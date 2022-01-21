@@ -4,7 +4,6 @@ const teacherController = require("../app/controller/teacher.controller")
 
 // [add test] - [allCourses] - [singleCourse] - [edit profile]
 
-router.post("/pendingTeacher", teacherController.pendingTeacher)
 
 // english 
 

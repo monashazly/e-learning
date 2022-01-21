@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const validator = require('validator')
 const bcryptjs = require("bcryptjs");
+const jwt = require('jsonwebtoken');
+
 const teacherSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -55,6 +57,12 @@ teacherSchema.methods.toJSON = function () {
     return teacher
 }
 
-const Teacher = mongoose.model("Pendings", teacherSchema)
+teacherSchema.methods.generateToken = async function () {
+    const teacher = this
+    const token = await jwt.sign({ _id: teacher._id, type: 'teacher' }, process.env.TOKENHASHSECRET)
+    return token
+}
+
+const Teacher = mongoose.model("teacher", teacherSchema)
 
 module.exports = Teacher
