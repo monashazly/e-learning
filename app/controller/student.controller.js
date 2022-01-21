@@ -11,16 +11,17 @@ class Student {
         data: student,
         apistatus: true,
         message: 'data inserted successfully'
-      
-      })} catch (e) {
+
+      })
+    } catch (e) {
       res.status(500).send({
         apistatus: false,
         data: e.message,
         message: 'error in insertion'
       })
     }
-  
-}
+
+  }
   static PostLogin = async (req, res) => {
     try {
       let student = await studentModel.login(req.body.email, req.body.password)
@@ -39,7 +40,7 @@ class Student {
       })
     }
   }
-  static getEditProfile = async (req, res) => {
+  static postEditProfile = async (req, res) => {
     try {
       const student = await studentModel.findOne({ _id: req.params.id })
       student.name = req.body.name

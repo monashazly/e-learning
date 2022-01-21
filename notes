@@ -17,21 +17,5 @@ techer => name - email - password - subjects [{ subjectname}]
 admin => name - email - password
 subject => name - description - videos [{videoName,link,views: [] }] - exames []
 
-    <video src=''></video>
-
-    {
-        email:'test@test',
-        password:123,
-        type:'techer' || 'student'
-    }
-
-
-
-    [
-        {videoName:1,link},
-        {videoName:3,link},
-        {videoName:4,link},
-        {videoName:2,link},
-    ]
-
-1 - 2 - 3 - 4
+git checkout -b <newBranch>
+git branch --set-upstream-to=origin/main <new Branch>
