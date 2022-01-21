@@ -1,7 +1,8 @@
 const studentModel = require('../../models/studentmodel')
-const bycryptjs = require('bcryptjs')
+const bycryptjs = require("bcryptjs")
 class Student {
-  //  - [myCourses] - [profile] - [edit Profile] - [exames] - [add course] - [delete course]-show single
+  //  - //[myCourses]// - [profile] - [edit Profile] - //[exames]//
+  //[add course]// - [delete course]
   static PostRegister = async (req, res) => {
     try {
       let student = new studentModel(req.body)
@@ -10,15 +11,16 @@ class Student {
         data: student,
         apistatus: true,
         message: 'data inserted successfully'
-      })
-    } catch (e) {
+      
+      })} catch (e) {
       res.status(500).send({
         apistatus: false,
         data: e.message,
         message: 'error in insertion'
       })
     }
-  }
+  
+}
   static PostLogin = async (req, res) => {
     try {
       let student = await studentModel.login(req.body.email, req.body.password)
@@ -41,27 +43,16 @@ class Student {
     try {
       const student = await studentModel.findOne({ _id: req.params.id })
       student.name = req.body.name
-      student.password = await bycryptjs.hash(
-        req.body.password,
-        parseInt(process.env.PASSWORDHASH)
-      )
+      student.password = await bycryptjs.hash(req.body.password, parseInt(process.env.PASSWORDHASH))
       student.save()
       res.send({
         data: student
       })
-    } catch (e) {
+    }
+    catch (e) {
       res.send(e.message)
     }
     //upload photo
-  }
-  static PostProfile =async(req,res)=>{
-     try{ const student =await studentModel.findOne({_id:req.params.id})
-      res.send({
-          data:student
-      })}
-      catch(e){
-          res.send(e.message)
-      }
   }
 }
 module.exports = Student
