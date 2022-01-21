@@ -61,5 +61,13 @@ const token= await jwt.sign({_id:student._id},process.env.TOKENHASHSECRET)
 return token
 
 }
+//response
+studentSchema.methods.toJSON=function(){
+    const student = this.toObject()
+    delete student.__v
+    delete student.password
+    delete student.tokens
+    return student
+}
 const Student=mongoose.model("Student",studentSchema)
 module.exports=Student
