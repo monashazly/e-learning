@@ -3,6 +3,7 @@ const subjectModel = require("../../models/subject.model")
 const teacherModel = require("../../models/teacher.model");
 const resData = require('../helper/resData')
 
+
 class Teacher {
     static postVideo = async (req, res) => {
         try {
@@ -33,5 +34,6 @@ class Teacher {
             resData(res, 500, false, e.message, "failed")
         }
     }
+
 }
 module.exports = Teacher
