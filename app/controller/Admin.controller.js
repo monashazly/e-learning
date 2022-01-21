@@ -1,5 +1,8 @@
 const subjectModel = require('../../models/subject.model')
 const otpGenerator = require('otp-generator')
+const adminModel = require('../../models/Admin.model')
+
+
 const resData = (res, statusCode, apiStatus, data, message) => {
     res.status(statusCode).send({
         apiStatus,
@@ -9,19 +12,21 @@ const resData = (res, statusCode, apiStatus, data, message) => {
 }
 
 class admin {
-    static login = async(req, res)=>{
-        try{
+    static login = async (req, res) => {
+        try {
             let admin = await adminModel.loginAdmin(req.body.email, req.body.password)
-            let token = await admin.generateToken()
-            res.status(200).send({apiStatus:true, data:{admin, token}, message:"logged in"})
+            let token = await adminModel.generateToken()
+            res.status(200).send({ apiStatus: true, data: { admin, token }, message: "logged in" })
         }
-        catch(e){
-            res.status(500).send({apiStatus:false, data:e.message, message:"invalid data"})
+        catch (e) {
+            res.status(500).send({ apiStatus: false, data: e.message, message: "invalid data" })
         }
     }
-    static me = async(req,res)=>{
-        res.status(200).send({apiStatus:true, data:req.user, message:"data featched"})
+    static me = async (req, res) => {
+        res.status(200).send({ apiStatus: true, data: req.user, message: "data featched" })
     }
+
+
     static postAddSubject = async (req, res) => {
         try {
             let subject = new subjectModel(req.body);
@@ -32,8 +37,6 @@ class admin {
             resData(res, 500, false, e.message, 'faild in add subject')
         }
     }
-
-
     static delMainSubject = async (req, res) => {
         try {
             let _id = req.params.id;
@@ -45,9 +48,6 @@ class admin {
         }
     }
 
-    static adminLogin = async (req, res) => {
-
-    }
 }
 
 
