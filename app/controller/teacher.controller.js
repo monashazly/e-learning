@@ -1,5 +1,6 @@
 const req = require("express/lib/request")
 const subjectModel = require("../../models/subject.model")
+
 const resData = (res, statusCode, apiStatus, data, message) => {
     res.status(statusCode).send({
         apiStatus,
@@ -48,5 +49,18 @@ class Teacher{
             resData(res, 500, false, e.message, "failed")
         }
     }
+    // static postTest=async(req,res)=>{
+    //     try{
+    //         let subject=await subjectModel.findOne({name:req.params.subject});
+    //         (subject.exames).push(req.body);
+    //         await subject.save();
+    //         resData(res, 200, true, subject, `${req.params.subject} test Added Successfuly`)
+            
+    //     }
+    //     catch(e){
+    //         resData(res, 500, false, e.message, "failed")
+    //     }
+    // }
+
 }
 module.exports=Teacher

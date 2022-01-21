@@ -10,7 +10,7 @@ router.post("/postVideo/:subject",teacherController.postVideo)
 
 router.delete("/deleteVideo/:subject/:videoName",teacherController.deleteVideo)
 
-// router.post("/postTest/:subject",teacherController.addTest);
+// router.post("/postTest/:subject",teacherController.postTest);
 
 
 module.exports = router
