@@ -2,9 +2,11 @@ const router = require("express").Router()
 const teacherController = require("../app/controller/teacher.controller")
 
 
-// [register] - [add video] - [delete video] - [add test] - [allCourses] - [singleCourse] - [edit profile]
+// [add test] - [allCourses] - [singleCourse] - [edit profile]
 
 router.post("/pendingTeacher", teacherController.pendingTeacher)
+
+// english 
 
 router.post("/postVideo/:subject", teacherController.postVideo)
 

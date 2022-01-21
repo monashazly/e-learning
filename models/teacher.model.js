@@ -26,9 +26,9 @@ const teacherSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    subjects: [
+    courses: [
         {
-            subjectName: { type: String }
+            course: { type: mongoose.Schema.Types.ObjectId }
         }
     ],
     tokens: [
