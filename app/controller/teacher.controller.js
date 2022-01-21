@@ -1,6 +1,10 @@
 const req = require("express/lib/request")
 const subjectModel = require("../../models/subject.model")
 const teacherModel = require("../../models/teacher.model");
+<<<<<<< HEAD
+=======
+
+>>>>>>> febe3f145245a55ea41977255ef57579ec528b95
 
 const resData = (res, statusCode, apiStatus, data, message) => {
     res.status(statusCode).send({
