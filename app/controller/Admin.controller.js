@@ -1,6 +1,7 @@
 const subjectModel = require('../../models/subject.model')
 const teacherModel = require('../../models/teacher.model')
 const adminModel = require('../../models/admin.model')
+const studentModel = require('../../models/student.model')
 
 const resData = require('../helper/resData')
 
@@ -15,15 +16,25 @@ class admin {
             res.status(500).send({ apiStatus: false, data: e.message, message: "invalid data" })
         }
     }
-    static me = async (req, res) => {
+    static getProfile = async (req, res) => {
+        res.status(200).send({ apiStatus: true, data: req.user, message: "data featched" })
+    }
+    static postEditProfile = async (req, res) => {
+        let user = req.user
+        let { name, email } = req.body
+        try {
+            user.name = name; user.email = email
+            await user.save()
+            resData(res, 200, true, user, 'data updated Successfuly')
+        } catch (e) {
+            resData(res, 500, false, e.message, 'faild in update data')
+        }
         res.status(200).send({ apiStatus: true, data: req.user, message: "data featched" })
     }
 
-
-    static postAddSubject = async (req, res) => {
+    static postAddMainSubject = async (req, res) => {
         try {
             let subject = new subjectModel(req.body);
-            // res.send(subject)
             await subject.save()
             resData(res, 200, true, subject, 'subject Added Successfuly')
         } catch (e) {
@@ -51,7 +62,6 @@ class admin {
         }
     }
 
-
     static getTeacher = async (req, res) => {
         try {
             let _id = req.params.id
@@ -63,16 +73,38 @@ class admin {
         }
     }
 
-
-    static activeTeacher = async (req, res) => {
+    static getActiveTeacher = async (req, res) => {
         try {
             let _id = req.params.id
-            let teacher = await teacherModel.findOneAndUpdate({ _id }, { active: true })
+            let teacher = await teacherModel.findOneAndUpdate({ _id }, { activationAdmin: true })
             if (!teacher) return resData(res, 200, true, teacher, 'this teacher is not register make new account')
-            if (teacher.active === 'true') return resData(res, 200, true, teacher, 'this teacher is already active')
+            if (teacher.activationAdmin === 'true') return resData(res, 200, true, teacher, 'this teacher is already active')
             resData(res, 200, true, teacher, 'this teacher actived successfuly')
         } catch (e) {
             resData(res, 500, false, e.message, 'faild in fetch Data')
+        }
+    }
+
+    static getBlockTeacher = async (req, res) => {
+        try {
+            let _id = req.params.id
+            let user = await teacherModel.findOneAndUpdate({ _id }, { blocked: true });
+            if (!user) return resData(res, 200, true, user, 'user is not valid')
+            if (user.blocked) return resData(res, 200, true, user, 'Teacher is already Blocked')
+            resData(res, 200, true, user, 'Teacher Blocked Successfuly')
+        } catch (e) {
+            resData(res, 500, true, e.message, 'Error in block teacher')
+        }
+    }
+    static getBlockStudent = async (req, res) => {
+        try {
+            let _id = req.params.id
+            let user = await studentModel.findOneAndUpdate({ _id }, { blocked: true });
+            if (!user) return resData(res, 200, true, user, 'user is not valid')
+            if (user.blocked) return resData(res, 200, true, user, 'Student is already Blocked')
+            resData(res, 200, true, user, 'Student Blocked Successfuly')
+        } catch (e) {
+            resData(res, 500, true, e.message, 'Error in block Student')
         }
     }
 }

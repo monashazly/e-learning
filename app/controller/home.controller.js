@@ -9,7 +9,6 @@ const register = async (req, res, table) => {
         let { name, email, password } = req.body
         let data = { name, email, password }
         let user = new table(data)
-        console.log(user)
         user.activationOTP = otpGenerator.generate(12, "")
         await user.save()
         sendEmail(user.email, 'Activation Email', `<h2 style='color:blue'>Email Activation</h2>
@@ -63,7 +62,6 @@ class Home {
             login(req, res, teacherModel)
         }
     }
-
 
     static getActivationOTP = async (req, res) => {
         if (req.params.id.startsWith('T')) {

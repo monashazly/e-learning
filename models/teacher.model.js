@@ -47,7 +47,11 @@ const teacherSchema = new mongoose.Schema({
                 type: String
             }
         }
-    ]
+    ],
+    blocked: {
+        type: Boolean,
+        default: false
+    }
 },
     { timestamps: true }
 )
@@ -82,4 +86,4 @@ teacherSchema.methods.generateToken = async function () {
 
 const Teacher = mongoose.model("teacher", teacherSchema)
 
-module.exports =Teacher
+module.exports = Teacher
