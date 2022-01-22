@@ -63,8 +63,8 @@ teacherSchema.methods.toJSON = function () {
     delete teacher.tokens
     return teacher
 }
-teacherSchema.statics.login = async function (Email, password) {
-    const teacher = await Teacher.findOne({ Email })
+teacherSchema.statics.login = async function (email, password) {
+    const teacher = await Teacher.findOne({ email })
     console.log(teacher)
     if (!teacher) throw new Error("not a user")
 
