@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const validator = require('validator')
 const bcryptjs = require("bcryptjs")
+const jwt = require("jsonwebtoken")
 
 const adminSchema = new mongoose.Schema({
     name: {
@@ -23,15 +24,19 @@ const adminSchema = new mongoose.Schema({
             if (!validator.isEmail(value)) throw new Error("invalid email format")
         }
     },
-    tokens: [{ token: { type: String, required: true } }],
-    otp: {
-        type: String,
-        default: Date.now()
-    }
+    token: { type: String },
 },
     { timestamps: true }
 )
-//adminLogIn
+// return user 
+adminSchema.methods.toJSON = function () {
+    let user = this.toObject();
+
+    delete user.password
+
+    return user
+}
+// adminLogIn
 adminSchema.statics.loginAdmin = async (email, password) => {
     const admin = await adminModel.findOne({ email })
     if (!admin) throw new Error("invalid admin email")
@@ -39,7 +44,14 @@ adminSchema.statics.loginAdmin = async (email, password) => {
     if (!isValid) throw new Error("invalid password")
     return admin
 }
-const adminModel = mongoose.model('admin', adminSchema);
+// genarate token
+adminSchema.methods.generateToken = async function () {
+    let user = this
+    user.token = await jwt.sign({ _id: user._id }, process.env.TOKENHASHSECRET)
+    await user.save()
+    return user.token
+}
 
+const adminModel = mongoose.model('admin', adminSchema);
 
 module.exports = adminModel

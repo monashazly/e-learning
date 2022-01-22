@@ -4,6 +4,10 @@ const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
 const teacherSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        default: () => 'T' + new mongoose.Types.ObjectId()
+    },
     name: {
         type: String,
         trim: true,
@@ -24,7 +28,11 @@ const teacherSchema = new mongoose.Schema({
             if (!validator.isEmail(value)) throw new Error("invalid email format")
         }
     },
-    active: {
+    activationOTP: {
+        type: Boolean,
+        default: false
+    },
+    activationAdmin: {
         type: Boolean,
         default: false
     },
