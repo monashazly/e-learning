@@ -36,11 +36,11 @@ const teacherSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    courses: [
-        {
-            course: { type: mongoose.Schema.Types.ObjectId }
-        }
-    ],
+    // courses: [
+    //     {
+    //         course: { type: mongoose.Schema.Types.ObjectId }
+    //     }
+    // ],
     tokens: [
         {
             token: {
@@ -66,9 +66,10 @@ teacherSchema.methods.toJSON = function () {
 }
 teacherSchema.statics.login = async function (Email, password) {
     const teacher = await Teacher.findOne({ Email })
+    console.log(teacher)
     if (!teacher) throw new Error("not a user")
 
-    const isCorrect = await bycryptjs.compare(password, teacher.password)
+    const isCorrect = await bcryptjs.compare(password, teacher.password)
     if (!isCorrect) throw new Error("password not valid")
     return teacher
 
