@@ -5,7 +5,7 @@ const subjectModel=require("../models/subject.model");
 const teacherSubject=require("../models/teacherSubject.model")
 
 
-//  [add test] - [allCourses] - [singleCourse] 
+//  [add test] 
 
 
 router.post("/postVideo/:id", teacherController.postVideo)
@@ -23,8 +23,13 @@ router.get("/add/:teacher/:subject",async(req,res)=>{
     await subjectTeacher.save();
     res.send(subjectTeacher);
 })
-router.get("/subjects/:teacher",async(req,res)=>{
-    let resp=await teacherSubject.find({teacher:req.params.teacher}).populate("subject");
+router.get("/all/subjects/:teacher",async(req,res)=>{
+    let resp=await teacherSubject.find({teacher:req.params.teacher}).populate("subject").populate("teacher");
+    console.log(resp)
+    res.send(resp)
+})
+router.get("/single/:subject/:teacher",async(req,res)=>{
+    let resp= await teacherSubject.findOne({teacher:req.params.teacher,subject:req.params.subject}).populate("subject").populate("teacher");
     console.log(resp)
     res.send(resp)
 })
