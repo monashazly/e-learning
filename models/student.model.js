@@ -1,10 +1,15 @@
 const mongoose = require("mongoose")
+const { ObjectId } = require('mongodb')
 const validator = require("validator")
 const bycryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
 
 const studentSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        default: () => 'S' + new mongoose.Types.ObjectId()
+    },
     name: {
         type: String,
         trim: true,
@@ -38,9 +43,21 @@ const studentSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-    }]
+    }],
+    activationOTP: { type: String },
+    activationOTPStatus: { type: Boolean, default: false }
 
 }, { tiemstamps: true })
+// Custom student data return 
+studentSchema.methods.toJSON = function () {
+    let user = this.toObject()
+    delete user.tokens
+    delete user.password
+    delete user.activationOTPStatus
+    delete user.activationOTP
+    delete user.__v
+    return user
+}
 //passwordhash
 studentSchema.pre("save", async function () {
     const student = this
@@ -49,14 +66,12 @@ studentSchema.pre("save", async function () {
 
 })
 //login function
-studentSchema.statics.login = async function (Email, password) {
-    const student = await Student.findOne({ Email })
+studentSchema.statics.login = async function (email, password) {
+    const student = await Student.findOne({ email })
     if (!student) throw new Error("not a user")
-
     const isCorrect = await bycryptjs.compare(password, student.password)
     if (!isCorrect) throw new Error("password not valid")
     return student
-
 }
 //generate token
 studentSchema.methods.GenerateToken = async function () {

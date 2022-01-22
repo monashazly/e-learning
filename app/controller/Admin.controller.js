@@ -1,13 +1,15 @@
 const subjectModel = require('../../models/subject.model')
 const teacherModel = require('../../models/teacher.model')
+const adminModel = require('../../models/admin.model')
+
 const resData = require('../helper/resData')
 
 class admin {
     static login = async (req, res) => {
         try {
             let admin = await adminModel.loginAdmin(req.body.email, req.body.password)
-            let token = await admin.generateToken()
-            res.status(200).send({ apiStatus: true, data: { admin, token }, message: "logged in" })
+            await admin.generateToken()
+            res.status(200).send({ apiStatus: true, data: { admin }, message: "logged in" })
         }
         catch (e) {
             res.status(500).send({ apiStatus: false, data: e.message, message: "invalid data" })
