@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-const { ObjectId } = require('mongodb')
 const validator = require("validator")
 const bycryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
@@ -45,7 +44,8 @@ const studentSchema = new mongoose.Schema({
         }
     }],
     activationOTP: { type: String },
-    activationOTPStatus: { type: Boolean, default: false }
+    activationOTPStatus: { type: Boolean, default: false },
+    blocked: { type: Boolean, default: false }
 
 }, { tiemstamps: true })
 // Custom student data return 
