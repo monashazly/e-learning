@@ -12,13 +12,12 @@ const register = async (req, res, table) => {
         console.log(user)
         user.activationOTP = otpGenerator.generate(12, "")
         await user.save()
-        user = `http://localhost:3000/activation/${user._id}/${user.activationOTP}`
-        // sendEmail(user.email, 'Activation Email', `<h2 style='color:blue'>Email Activation</h2>
+        sendEmail(user.email, 'Activation Email', `<h2 style='color:blue'>Email Activation</h2>
 
-        // Click on this link to active your user
+        Click on this link to active your user
 
-        // http://localhost:3000/activation/${user._id}/${user.activationOTP}
-        // `)
+        http://localhost:3000/activation/${user._id}/${user.activationOTP}
+        `)
         resData(res, 200, true, user, 'data inserted successfully')
     } catch (e) {
         resData(res, 500, false, e.message, 'error in insertion')
@@ -64,6 +63,7 @@ class Home {
             login(req, res, teacherModel)
         }
     }
+
 
     static getActivationOTP = async (req, res) => {
         if (req.params.id.startsWith('T')) {

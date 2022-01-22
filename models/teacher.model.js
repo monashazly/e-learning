@@ -64,7 +64,15 @@ teacherSchema.methods.toJSON = function () {
     delete teacher.tokens
     return teacher
 }
+teacherSchema.statics.login = async function (Email, password) {
+    const teacher = await Teacher.findOne({ Email })
+    if (!teacher) throw new Error("not a user")
 
+    const isCorrect = await bycryptjs.compare(password, teacher.password)
+    if (!isCorrect) throw new Error("password not valid")
+    return teacher
+
+}
 teacherSchema.methods.generateToken = async function () {
     const teacher = this
     const token = await jwt.sign({ _id: teacher._id, type: 'teacher' }, process.env.TOKENHASHSECRET)
@@ -73,4 +81,4 @@ teacherSchema.methods.generateToken = async function () {
 
 const Teacher = mongoose.model("teacher", teacherSchema)
 
-module.exports = Teacher
+module.exports =Teacher
