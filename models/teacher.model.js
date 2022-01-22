@@ -4,10 +4,10 @@ const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
 const teacherSchema = new mongoose.Schema({
-    _id: {
-        type: String,
-        default: () => 'T' + new mongoose.Types.ObjectId()
-    },
+    // _id: {
+    //     type: String,
+    //     default: () => 'T' + new mongoose.Types.ObjectId()
+    // },
     name: {
         type: String,
         trim: true,
@@ -36,11 +36,6 @@ const teacherSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    // courses: [
-    //     {
-    //         course: { type: mongoose.Schema.Types.ObjectId }
-    //     }
-    // ],
     tokens: [
         {
             token: {
