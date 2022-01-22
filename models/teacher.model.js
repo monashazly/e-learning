@@ -29,9 +29,9 @@ const teacherSchema = new mongoose.Schema({
         }
     },
     activationOTP: {
-        type: Boolean,
-        default: false
+        type: String
     },
+    activationOTPStatus: { type: Boolean, default: false },
     activationAdmin: {
         type: Boolean,
         default: false
