@@ -1,9 +1,7 @@
 const resData = (res, statusCode, apiStatus, data, message) => {
-    res.status(statusCode).send({
-        apiStatus,
-        data,
-        message,
-    })
+    let all = { apiStatus, data, message, }
+    if (data == '') delete all.data
+    res.status(statusCode).send(all)
 }
 
 module.exports = resData

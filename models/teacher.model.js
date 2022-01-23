@@ -28,6 +28,7 @@ const teacherSchema = new mongoose.Schema({
             if (!validator.isEmail(value)) throw new Error("invalid email format")
         }
     },
+    subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'subject' }],
     activationOTP: {
         type: String
     },
@@ -65,9 +66,7 @@ teacherSchema.methods.toJSON = function () {
 }
 teacherSchema.statics.login = async function (email, password) {
     const teacher = await Teacher.findOne({ email })
-    console.log(teacher)
     if (!teacher) throw new Error("not a user")
-
     const isCorrect = await bcryptjs.compare(password, teacher.password)
     if (!isCorrect) throw new Error("password not valid")
     return teacher
