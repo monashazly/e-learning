@@ -54,7 +54,7 @@ class admin {
 
     static getAllTeachers = async (req, res) => {
         try {
-            let teachers = await teacherModel.find({});
+            let teachers = await teacherModel.find({}).populate('subjects');
             if (teachers.length == 0) return resData(res, 200, true, teachers, 'No teachers yet')
             resData(res, 200, true, teachers, 'data fetched Successfuly')
         } catch (e) {
@@ -65,7 +65,7 @@ class admin {
     static getTeacher = async (req, res) => {
         try {
             let _id = req.params.id
-            let teacher = await teacherModel.find({ _id })
+            let teacher = await teacherModel.find({ _id }).populate('subjects')
             if (!teacher) return resData(res, 200, true, teacher, 'No teacher matched')
             resData(res, 200, true, teacher, 'data fetched Successfuly')
         } catch (e) {
@@ -107,6 +107,24 @@ class admin {
             resData(res, 500, true, e.message, 'Error in block Student')
         }
     }
+
+    static getAddSubjectTeacher = async (req, res) => {
+        try {
+            let subjectId = req.params.subId;
+            let teachId = req.params.teachId
+            console.log(teachId)
+            let teacher = await teacherModel.findOne({ _id: teachId });
+            if (!teacher) return resData(res, 200, true, null, 'no teacher matched')
+            let subject = teacher.subjects.findIndex(sub => sub == subjectId)
+            if (subject != -1) return resData(res, 200, true, '', 'this subject is already exsist')
+            teacher.subjects.push(subjectId)
+            await teacher.save()
+            resData(res, 200, true, teacher, 'this subject added Successfuly')
+        } catch (e) {
+            resData(res, 500, false, e.message, 'faild in add subject')
+        }
+    }
+
 }
 
 
