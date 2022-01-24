@@ -30,13 +30,9 @@ const studentSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    subjects: [{
-        subjectName: {
-            type: String,
-            required: true
-        },
-        grade: {}
-    }],
+    subjects:[{type:mongoose.Schema.Types.ObjectId,ref:'subject'}
+
+    ],
     tokens: [{
         token: {
             type: String,

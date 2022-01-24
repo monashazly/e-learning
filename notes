@@ -48,13 +48,4 @@ let admin = new Admin
 
 
 
-relations
-test
-forgot password [ time ] => 15m => 15 *60 *1000
-front end save teacher   =>
-
-
-1 S => 1000 MS
-1 min => 60000 MS
-15 min => 900000 MS
 
