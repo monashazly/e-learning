@@ -30,13 +30,9 @@ const studentSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    subjects: [{
-        subjectName: {
-            type: String,
-            required: true
-        },
-        grade: {}
-    }],
+    subjects:[{type:mongoose.Schema.Types.ObjectId,ref:'subject'}
+
+    ],
     tokens: [{
         token: {
             type: String,
@@ -48,7 +44,7 @@ const studentSchema = new mongoose.Schema({
         activationOTPStatus: { type: Boolean, default: false },
         blocked: { type: Boolean, default: false },
         resetPasswordOTP: { type: String },
-        resetPasswordTime: { type: Number, default: () => Date.now() }
+        resetPasswordTime: { type: Number }
     },
 
 }, { tiemstamps: true })
