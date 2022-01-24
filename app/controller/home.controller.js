@@ -1,3 +1,4 @@
+const bcryptjs = require('bcryptjs/dist/bcrypt')
 const otpGenerator = require('generate-serial-key')
 const studentModel = require('../../models/student.model')
 const teacherModel = require('../../models/teacher.model')
@@ -269,18 +270,40 @@ class Home {
     }
 
     static postResetPassword = async (req, res) => {
-        if (req.body.userType == 'student') {
+        try {
             let email = req.body.email
             let user = await studentModel.findOne({ email })
             if (!user) return resData(res, 200, true, '', 'this email does not found')
-            if (user.process.resetPasswordTime > Date.now()) return resData(req, 200, true, '', 'the link already send, try again later')
+            if (user.process.resetPasswordTime > Date.now()) return resData(req, 200, true, '', 'the link already sent before, try again later')
             user.process.resetPasswordOTP = otpGenerator.generate(12, "")
             user.process.resetPasswordTime = Date.now() + (15 * 60 * 1000)
-
+            await user.save()
+            let link = `http://localhost:3000/resetPassword/${user._id}/${user.process.resetPasswordOTP}`
+            resData(res, 200, true, `${user.email}`, 'Link has been Send Successfuly to Email')
+        } catch (e) {
+            resData(res, 500, false, e.message, 'Error in handling process try again later')
         }
-        else if (req.body.userType == 'teacher') ''
     }
+
+    static postResetPasswordForm = async (req, res) => {
+        try {
+            let _id = req.params.id
+            let resetPasswordOTP = req.params.resetPasswordOTP
+            let password = req.body.password
+            let user = await studentModel.findOne({ _id, 'process.resetPasswordOTP': resetPasswordOTP })
+            if (!user) return resData(res, 200, true, '', 'this link is not valid')
+            if (user.process.resetPasswordTime < Date.now()) resData(res, 200, true, '', 'this link expired')
+            let hashPassword = await bcryptjs.hash(password, +process.env.PASSWORDHASH)
+            user.password = hashPassword;
+            await user.save()
+        } catch (e) {
+            resData(res, 500, false, e.message, 'Error in handling process try again later')
+        }
+    }
+
 }
+
+
 
 module.exports = Home
 
