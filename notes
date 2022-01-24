@@ -33,14 +33,12 @@ git branch --set-upstream-to=origin/main <new Branch>
 
     - Admin :
 
-[show all teacher[with all operations]] - [delete video]
-
-    (show all teacher) => [add Subject] - [delete subject from teacher]
+    (show all teacher) => [delete subject from teacher]
 
 [models] => [student][techers][admin][subject]
-student => name - email - password - subjects [ {subjectname,grades} ]
-techer => name - email - password - subjects [{ subjectname}]
-admin => name - email - password
+student  => name - email - password - subjects [ {subjectname,grades} ]
+techer   => name - email - password - subjects [{ subjectname}]
+admin    => name - email - password
 subject => name - description - videos [{videoName,link,views: [] }] - exames []
 
 
@@ -50,4 +48,13 @@ let admin = new Admin
 
 
 
-relations - test - forgot password[ time ] -  
+relations
+test
+forgot password [ time ] => 15m => 15 *60 *1000
+front end save teacher   =>
+
+
+1 S => 1000 MS
+1 min => 60000 MS
+15 min => 900000 MS
+
