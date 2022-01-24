@@ -9,13 +9,13 @@ const register = async (req, res, table) => {
         let { name, email, password } = req.body
         let data = { name, email, password }
         let user = new table(data)
-        user.activationOTP = otpGenerator.generate(12, "")
+        user.process.activationOTP = otpGenerator.generate(12, "")
         await user.save()
         sendEmail(user.email, 'Activation Email', `<h2 style='color:blue'>Email Activation</h2>
 
         Click on this link to active your user
 
-        http://localhost:3000/activation/${user._id}/${user.activationOTP}
+        <a href="http://localhost:3000/activation/${user._id}/${user.process.activationOTP}">Click here</a>
         `)
         resData(res, 200, true, user, 'data inserted successfully')
     } catch (e) {
@@ -28,7 +28,7 @@ const login = async (req, res, table) => {
         let token = await user.GenerateToken()
         user.tokens.push({ token })
         await user.save()
-        resData(res, 200, true, user, 'logged in successfully')
+        resData(res, 200, true, token, 'logged in successfully')
     } catch (e) {
         resData(res, 500, false, e.message, 'Error')
     }
@@ -37,10 +37,10 @@ const activationOTP = async (req, res, table) => {
     try {
         let _id = req.params.id;
         let activationOTP = req.params.activationOTP
-        let user = await table.findOneAndUpdate({ _id, activationOTP }, { activationOTPStatus: true, activationOTP: "" })
+        let user = await table.findOneAndUpdate({ _id, 'process.activationOTP': activationOTP }, { 'process.activationOTPStatus': true, 'process.activationOTP': "" })
         if (!user) return resData(res, 200, true, user, 'this link is not valid')
-        if (user.activationOTPStatus === true) return resData(res, 200, true, user, 'this user is already activated')
-        resData(res, 200, true, user, 'this user is activated Successfuly')
+        if (user.process.activationOTPStatus === true) return resData(res, 200, true, user, 'this user is already activated')
+        resData(res, 200, true, '', 'this user is activated Successfuly')
     } catch (e) {
         resData(res, 500, false, e.message, 'error in active user try again')
     }
@@ -70,6 +70,60 @@ class Home {
             activationOTP(req, res, studentModel)
         }
     }
+
+    static postResetPassword = async (req, res) => {
+        if (req.body.userType == 'student') {
+            let email = req.body.email
+            let user = await studentModel.findOne({ email })
+            if (!user) return resData(res, 200, true, '', 'this email does not found')
+            if (user.process.resetPasswordTime > Date.now()) return resData(req, 200, true, '', 'the link already send, try again later')
+            user.process.resetPasswordOTP = otpGenerator.generate(12, "")
+            user.process.resetPasswordTime = Date.now() + (15 * 60 * 1000)
+
+        }
+        else if (req.body.userType == 'teacher') ''
+    }
 }
 
 module.exports = Home
+
+
+
+
+
+
+/*
+Date.now() => to end    => 100 + 30 ms
+Date.now() => for Check => 120 ms
+
+if(check > end) false
+if(end < check) true
+
+        past        present         future
+         50           100             150
+
+        15 min => 90000 MS
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

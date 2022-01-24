@@ -2,10 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const studentModel = require('../models/student.model')
 const teacherModel = require('../models/teacher.model')
-const adminModel = require('../models/admin.model');
 const resData = require('../app/helper/resData');
-
-
 
 const auth = async (req, res, next) => {
 

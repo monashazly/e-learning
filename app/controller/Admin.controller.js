@@ -112,11 +112,10 @@ class admin {
         try {
             let subjectId = req.params.subId;
             let teachId = req.params.teachId
-            console.log(teachId)
             let teacher = await teacherModel.findOne({ _id: teachId });
             if (!teacher) return resData(res, 200, true, null, 'no teacher matched')
-            let subject = teacher.subjects.findIndex(sub => sub == subjectId)
-            if (subject != -1) return resData(res, 200, true, '', 'this subject is already exsist')
+            let subject = teacher.subjects.find(sub => sub == subjectId)
+            if (!subject) return resData(res, 200, true, '', 'this subject is already exsist')
             teacher.subjects.push(subjectId)
             await teacher.save()
             resData(res, 200, true, teacher, 'this subject added Successfuly')
@@ -125,6 +124,19 @@ class admin {
         }
     }
 
+    static getDeleteVideo = async (req, res) => {
+        try {
+            let _id = req.params.id
+            let subject = await subjectModel.findOne({ 'videos._id': _id })
+            if (!subject) return resData(res, 200, true, null, 'this Video id is not valid')
+            subject.videos = subject.videos.filter(vid => vid._id != _id)
+            await subject.save()
+            resData(res, 200, true, '', 'video deleted Successfuly')
+        } catch (e) {
+            resData(res, 500, false, '', e.message)
+        }
+
+    }
 }
 
 

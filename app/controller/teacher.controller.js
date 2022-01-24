@@ -36,26 +36,26 @@ class Teacher {
     static showProfile = async (req, res) => {
         try {
             const teacher = await teacherModel.findById(req.params.id)
-            if(!teacher){return resData(res, 404, true, null, `profile not found`) } 
+            if (!teacher) { return resData(res, 404, true, null, `profile not found`) }
             resData(res, 200, true, teacher, `profile found`)
         }
         catch (e) {
             resData(res, 500, false, e.message, "failed")
         }
     }
-    static editProfile=async(req,res)=>{
-        try{
+    static editProfile = async (req, res) => {
+        try {
             const teacher = await teacherModel.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {new:true,runValidators:true}
+                req.params.id,
+                req.body,
+                { new: true, runValidators: true }
             )
-        if(!teacher){return resData(res, 404, true, null, `profile not found`) } 
-        resData(res, 200, true, teacher, `profile found and updated`)
+            if (!teacher) { return resData(res, 404, true, null, `profile not found`) }
+            resData(res, 200, true, teacher, `profile found and updated`)
         }
-        catch(e){
+        catch (e) {
             resData(res, 500, false, e.message, "failed")
-        }   
+        }
     }
 }
 module.exports = Teacher
