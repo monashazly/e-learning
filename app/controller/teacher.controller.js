@@ -57,5 +57,17 @@ class Teacher {
             resData(res, 500, false, e.message, "failed")
         }
     }
+    static postAddExam=async(req,res)=>{
+        try{
+            let subject=await subjectModel.findById(req.params.subId);
+            if(!subject)return resData(res, 404, true, subject, `subject not found`)
+            subject.exames.push(req.body);
+            await subject.save()
+            resData(res, 200, true, subject, "exam added")
+        }
+        catch{
+            resData(res, 500, false, e.message, "failed")
+        }
+    }
 }
 module.exports = Teacher
