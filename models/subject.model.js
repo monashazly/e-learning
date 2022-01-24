@@ -29,16 +29,24 @@ const subjectSchema = new mongoose.Schema({
             },
             views: [
                 {
-                    userId: {
-                        type: mongoose.Schema.Types.ObjectId,
-                    }
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "student"
                 }
             ]
         }
     ],
     exames: [
         {
-            exam: { type: String }
+            examName: String,
+            exam: [
+                {
+                    qus: { type: String },
+                    right: { type: String },
+                    ansewrs: [{
+                        type: String
+                    }]
+                }
+            ]
         }
     ]
 }, { timestamps: true })

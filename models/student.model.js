@@ -30,22 +30,22 @@ const studentSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    subjects: [{
-        subjectName: {
-            type: String,
-            required: true
-        },
-        grade: {}
-    }],
+    subjects:[{type:mongoose.Schema.Types.ObjectId,ref:'subject'}
+
+    ],
     tokens: [{
         token: {
             type: String,
             required: true
         }
     }],
-    activationOTP: { type: String },
-    activationOTPStatus: { type: Boolean, default: false },
-    blocked: { type: Boolean, default: false }
+    process: {
+        activationOTP: { type: String },
+        activationOTPStatus: { type: Boolean, default: false },
+        blocked: { type: Boolean, default: false },
+        resetPasswordOTP: { type: String },
+        resetPasswordTime: { type: Number, default: () => Date.now() }
+    },
 
 }, { tiemstamps: true })
 // Custom student data return 

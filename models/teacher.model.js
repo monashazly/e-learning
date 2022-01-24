@@ -29,13 +29,12 @@ const teacherSchema = new mongoose.Schema({
         }
     },
     subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'subject' }],
-    activationOTP: {
-        type: String
-    },
-    activationOTPStatus: { type: Boolean, default: false },
-    activationAdmin: {
-        type: Boolean,
-        default: false
+    process: {
+        activationOTP: { type: String },
+        activationOTPStatus: { type: Boolean, default: false },
+        blocked: { type: Boolean, default: false },
+        resetPasswordOTP: { type: String },
+        resetPasswordTime: { type: Number, default: () => Date.now() }
     },
     tokens: [
         {
@@ -43,11 +42,7 @@ const teacherSchema = new mongoose.Schema({
                 type: String
             }
         }
-    ],
-    blocked: {
-        type: Boolean,
-        default: false
-    }
+    ]
 },
     { timestamps: true }
 )
