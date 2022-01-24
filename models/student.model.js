@@ -48,7 +48,7 @@ const studentSchema = new mongoose.Schema({
         activationOTPStatus: { type: Boolean, default: false },
         blocked: { type: Boolean, default: false },
         resetPasswordOTP: { type: String },
-        resetPasswordTime: { type: Number, default: () => Date.now() }
+        resetPasswordTime: { type: Number }
     },
 
 }, { tiemstamps: true })
