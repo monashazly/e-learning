@@ -20,8 +20,8 @@ router.post("/editTeacherProfile/:id",auth,authTeacher,teacherController.editPro
 
 router.post("/addExam/:subId",auth,authTeacher,teacherController.postAddExam)
 
-router.get("/subjects/:teacherId",teacherController.getAllCourses)
+router.get("/subjects/:teacherId",auth,authTeacher,teacherController.getAllCourses)
 
-router.get("/single/:subjectId",teacherController.getSingleCourse)
+router.get("/single/:subjectId",auth,authTeacher,teacherController.getSingleCourse)
 
 module.exports = router
