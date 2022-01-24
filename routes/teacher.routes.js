@@ -3,20 +3,22 @@ const teacherController = require("../app/controller/teacher.controller")
 const teacherModel = require("../models/teacher.model");
 const subjectModel=require("../models/subject.model");
 const teacherSubject=require("../models/teacherSubject.model")
+const auth =require("../middleware/all.auth")
+const authTeacher=require("../middleware/teacher.auth")
 
 
 //  [add test] 
 
 
-router.post("/postVideo/:id", teacherController.postVideo)
+router.post("/postVideo/:id",auth,authTeacher, teacherController.postVideo)
 
-router.delete("/deleteVideo/:id/:videoName", teacherController.deleteVideo)
+router.delete("/deleteVideo/:id/:videoName",auth,authTeacher, teacherController.deleteVideo)
 
-router.get("/showTeacherProfile/:id",teacherController.showProfile)
+router.get("/showTeacherProfile/:id",auth,authTeacher,teacherController.showProfile)
 
-router.post("/editTeacherProfile/:id",teacherController.editProfile)
+router.post("/editTeacherProfile/:id",auth,authTeacher,teacherController.editProfile)
 
-router.post("/addExam/:subId",teacherController.postAddExam)
+router.post("/addExam/:subId",auth,authTeacher,teacherController.postAddExam)
 
 router.get("/subjects/:teacherId",teacherController.getAllCourses)
 
