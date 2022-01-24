@@ -114,8 +114,11 @@ class admin {
             let teachId = req.params.teachId
             let teacher = await teacherModel.findOne({ _id: teachId });
             if (!teacher) return resData(res, 200, true, null, 'no teacher matched')
+
+
             let subject = teacher.subjects.find(sub => sub == subjectId)
             if (subject) return resData(res, 200, true, '', 'this subject is already exsist')
+
 
             teacher.subjects.push(subjectId)
             await teacher.save()
@@ -136,7 +139,6 @@ class admin {
         } catch (e) {
             resData(res, 500, false, '', e.message)
         }
-
     }
 }
 

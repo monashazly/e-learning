@@ -18,20 +18,8 @@ router.post("/editTeacherProfile/:id",teacherController.editProfile)
 
 router.post("/addExam/:subId",teacherController.postAddExam)
 
+router.get("/subjects/:teacherId",teacherController.getAllCourses)
 
-//add subject to teacher
-
-//show teacher courses
-router.get("/all/subjects/:teacherId",async(req,res)=>{
-    let resp=await teacherSubject.findOne({_id:req.params.teacherId}).subjects.populate("subject");
-    console.log(resp)
-    res.send(resp)
-})
-//show teacher single course
-router.get("/single/:subject/:teacher",async(req,res)=>{
-    let resp= await teacherSubject.findOne({teacher:req.params.teacher,subject:req.params.subject}).populate("subject").populate("teacher");
-    console.log(resp)
-    res.send(resp)
-})
+router.get("/single/:subjectId",teacherController.getSingleCourse)
 
 module.exports = router

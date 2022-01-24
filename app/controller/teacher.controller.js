@@ -69,5 +69,19 @@ class Teacher {
             resData(res, 500, false, e.message, "failed")
         }
     }
+    static getAllCourses=async(req,res)=>{
+        try{let resp= await teacherModel.findOne({_id:req.params.teacherId}).populate('subjects')
+        res.send(resp.subjects)}
+        catch(e){
+            resData(res, 500, false, '', e.message)
+        }
+    }
+    static getSingleCourse= async(req,res)=>{
+        try{let resp= await subjectModel.findOne({_id:req.params.subjectId});
+        res.send(resp)}
+        catch(e){
+            resData(res, 500, false, '', e.message)
+        }
+    }
 }
 module.exports = Teacher
