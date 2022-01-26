@@ -113,13 +113,12 @@ class admin {
             let subjectId = req.params.subId;
             let teachId = req.params.teachId
             let teacher = await teacherModel.findOne({ _id: teachId });
+            let subject = await subjectModel.findByIdAndUpdate(subjectId,{used:true})
             if (!teacher) return resData(res, 200, true, null, 'no teacher matched')
-
-
-            let subject = teacher.subjects.find(sub => sub == subjectId)
-            if (subject) return resData(res, 200, true, '', 'this subject is already exsist')
-
-
+            if(!subject) return resData(res, 200, true, null, 'no subject matched')
+            if(subject.used) return resData(res, 200, true, '', 'this subject already with another teacher')
+            let isAvalSubject = teacher.subjects.find(sub => sub == subjectId)
+            if (isAvalSubject) return resData(res, 200, true, '', 'this subject is already exsist')
             teacher.subjects.push(subjectId)
             await teacher.save()
             resData(res, 200, true, teacher, 'this subject added Successfuly')

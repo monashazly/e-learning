@@ -47,7 +47,7 @@ adminSchema.statics.loginAdmin = async (email, password) => {
 // genarate token
 adminSchema.methods.generateToken = async function () {
     let user = this
-    user.token = await jwt.sign({ _id: user._id }, process.env.TOKENHASHSECRET)
+    user.token = "A" + await jwt.sign({ _id: user._id }, process.env.TOKENHASHSECRET)
     await user.save()
     return user.token
 }
