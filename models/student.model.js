@@ -5,10 +5,6 @@ const jwt = require("jsonwebtoken")
 
 
 const studentSchema = new mongoose.Schema({
-    _id: {
-        type: String,
-        default: () => 'S' + new mongoose.Types.ObjectId()
-    },
     name: {
         type: String,
         trim: true,
@@ -30,7 +26,7 @@ const studentSchema = new mongoose.Schema({
         trim: true,
         required: true
     },
-    subjects:[{type:mongoose.Schema.Types.ObjectId,ref:'subject'}
+    subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'subject' }
 
     ],
     tokens: [{
@@ -76,7 +72,7 @@ studentSchema.statics.login = async function (email, password) {
 //generate token
 studentSchema.methods.GenerateToken = async function () {
     const student = this
-    const token = await jwt.sign({ _id: student._id, type: 'student' }, process.env.TOKENHASHSECRET)
+    const token = "S" + await jwt.sign({ _id: student._id, type: 'student' }, process.env.TOKENHASHSECRET)
     return token
 }
 const Student = mongoose.model("Student", studentSchema)

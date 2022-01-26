@@ -1,12 +1,15 @@
 const adminModel = require('../models/admin.model');
+const studentModel = require('../models/student.model')
+const teacherModel = require('../models/teacher.model')
 const jwt = require('jsonwebtoken');
 const resData = require('../app/helper/resData');
 
 const authAdmin = async (req, res, next) => {
     try {
         let token = req.header('Authorization').replace('bearer ', "");
-        let data = jwt.verify(token, process.env.TOKENHASHSECRET);
-        let user = await adminModel.findOne({ _id: data._id, token })
+        let newToken = token.slice(1)
+        let data = jwt.verify(newToken, process.env.TOKENHASHSECRET);
+        let user = await teacherModel.findOne({ _id: data._id, token })
         if (!user) throw new Error("You are not authorized")
         req.user = user;
         req.token = token

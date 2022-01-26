@@ -1,20 +1,14 @@
 const studentModel = require('../../models/student.model')
 const bycryptjs = require('bcryptjs')
 const resData = require('../helper/resData')
-var ObjectId = require('mongoose').Types.ObjectId; 
+var ObjectId = require('mongoose').Types.ObjectId;
 
 class Student {
   //exams
   static postEditProfile = async (req, res) => {
     try {
       let student = await studentModel.findByIdAndUpdate(
-        { _id: req.params.id },
-        req.body,
-        {
-          runValidators: true,
-          new: true,
-        }
-      );
+        { _id: req.params.id }, req.body, { runValidators: true, new: true, });
       // student.name = req.body.name || student.name
       // student.email = req.body.email || student.email
       // student.password = await bycryptjs.hash(req.body.password, +process.env.PASSWORDHASH)
@@ -65,11 +59,11 @@ class Student {
   static postCourses = async (req, res) => {
     try {
       let student = req.user;
-      let _id=student._id
-      let s=await studentModel.findOne({_id}).populate('subjects')
-     resData(res,200,true,s.subjects,"your enrolled courses")
+      let _id = student._id
+      let s = await studentModel.findOne({ _id }).populate('subjects')
+      resData(res, 200, true, s.subjects, "your enrolled courses")
     } catch (e) {
-     resData(res,500,false,e.message,"error fetching courses")
+      resData(res, 500, false, e.message, "error fetching courses")
     }
   };
 }

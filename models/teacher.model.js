@@ -4,10 +4,6 @@ const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 
 const teacherSchema = new mongoose.Schema({
-    _id: {
-        type: String,
-        default: () => 'T' + new mongoose.Types.ObjectId()
-    },
     name: {
         type: String,
         trim: true,
@@ -69,7 +65,7 @@ teacherSchema.statics.login = async function (email, password) {
 }
 teacherSchema.methods.GenerateToken = async function () {
     const teacher = this
-    const token = await jwt.sign({ _id: teacher._id, type: 'teacher' }, process.env.TOKENHASHSECRET)
+    const token = "T" + await jwt.sign({ _id: teacher._id, type: 'teacher' }, process.env.TOKENHASHSECRET)
     return token
 }
 
