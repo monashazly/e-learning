@@ -6,6 +6,17 @@ const studentModel = require('../../models/student.model')
 const resData = require('../helper/resData')
 
 class admin {
+    static postAddAdmin = async (req, res) => {
+        try {
+            let { name, password, email } = req.body
+            let data = { name, password, email }
+            let user = new adminModel(data)
+            await user.save()
+            resData(res, 200, true, '', 'data inserted successfully')
+        } catch (e) {
+            resData(res, 500, false, e.message, 'faild in insert data')
+        }
+    }
     static login = async (req, res) => {
         try {
             let admin = await adminModel.loginAdmin(req.body.email, req.body.password)
@@ -113,10 +124,10 @@ class admin {
             let subjectId = req.params.subId;
             let teachId = req.params.teachId
             let teacher = await teacherModel.findOne({ _id: teachId });
-            let subject = await subjectModel.findByIdAndUpdate(subjectId,{used:true})
+            let subject = await subjectModel.findByIdAndUpdate(subjectId, { used: true })
             if (!teacher) return resData(res, 200, true, null, 'no teacher matched')
-            if(!subject) return resData(res, 200, true, null, 'no subject matched')
-            if(subject.used) return resData(res, 200, true, '', 'this subject already with another teacher')
+            if (!subject) return resData(res, 200, true, null, 'no subject matched')
+            if (subject.used) return resData(res, 200, true, '', 'this subject already with another teacher')
             let isAvalSubject = teacher.subjects.find(sub => sub == subjectId)
             if (isAvalSubject) return resData(res, 200, true, '', 'this subject is already exsist')
             teacher.subjects.push(subjectId)

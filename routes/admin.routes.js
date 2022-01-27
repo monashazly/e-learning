@@ -2,6 +2,7 @@ const router = require("express").Router()
 const adminController = require("../app/controller/Admin.controller")
 
 // control admin
+router.post('/add-admin', adminController.postAddAdmin)
 router.post("/login", adminController.login)
 router.get('/profile', adminController.getProfile)
 router.post('/editProfile', adminController.postEditProfile)
