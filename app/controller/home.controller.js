@@ -14,7 +14,7 @@ const register = async (req, res, table) => {
         user.process.activationOTP = otpGenerator.generate(12, "")
         await user.save()
         sendEmail(user.email, 'Activation Email', mailContent(user, 'activation'))
-        resData(res, 200, true, user, 'data inserted successfully')
+        resData(res, 200, true, '', 'data inserted successfully')
     } catch (e) {
         resData(res, 500, false, e.message, 'error in insertion')
     }
