@@ -26,6 +26,7 @@ const teacherSchema = new mongoose.Schema({
     },
     subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'subject' }],
     process: {
+        activationAdmin: { type: Boolean, default: false },
         activationOTP: { type: String },
         activationOTPStatus: { type: Boolean, default: false },
         blocked: { type: Boolean, default: false },
