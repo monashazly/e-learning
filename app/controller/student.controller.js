@@ -18,7 +18,7 @@ class Student {
       res.send(e.message);
     }
   };
-  static postprofile = async (req, res) => {
+  static getprofile = async (req, res) => {
     try {
       let student = req.user;
       resData(res, 200, true, student, "your Data showed");
