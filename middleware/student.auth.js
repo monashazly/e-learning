@@ -10,7 +10,7 @@ const studentAuth = async (req, res, next) => {
         let user = await studentModel.findOne({ _id: data._id, 'tokens.token': token })
         if (!user) throw new Error("you are not authorized")
         if (!user.process.activationOTPStatus) throw new Error("Active Your account first")
-        if (!user.process.blocked) throw new Error("Your account blocked contact the admin")
+        if (user.process.blocked) throw new Error("Your account blocked contact the admin")
         req.user = user
         req.token = token
         next()
