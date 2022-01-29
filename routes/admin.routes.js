@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const adminController = require("../app/controller/Admin.controller")
+const auth = require('../middleware/admin.auth')
 
 // control admin
 router.post('/add-admin', adminController.postAddAdmin)
@@ -13,7 +14,7 @@ router.delete('/delMainSubject/:id', adminController.delMainSubject)
 router.delete('/delVideo/:id', adminController.getDeleteVideo)
 
 // control teacher
-router.get('/teachers', adminController.getAllTeachers)
+router.get('/teachers', auth, adminController.getAllTeachers)
 router.get('/teacher/:id', adminController.getTeacher)
 router.get('/active-teacher/:id', adminController.getActiveTeacher)
 router.get('/block-teacher/:id', adminController.getBlockTeacher)

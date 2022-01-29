@@ -52,6 +52,12 @@ adminSchema.methods.generateToken = async function () {
     return user.token
 }
 
+adminSchema.pre("save", async function () {
+    const student = this
+    if (student.isModified("password"))
+        student.password = await bcryptjs.hash(student.password, parseInt(process.env.PASSWORDHASH))
+})
+
 const adminModel = mongoose.model('admin', adminSchema);
 
 module.exports = adminModel
