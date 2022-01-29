@@ -11,7 +11,7 @@ const teacherAuth = async (req, res, next) => {
         if (!user) throw new Error("you are not authorized")
         if (!user.process.activationOTPStatus) throw new Error("Active Your account first")
         if (!user.process.activationAdmin) throw new Error("Contact the admin for activate your account")
-        if (!user.process.blocked) throw new Error("Your account blocked contact the admin")
+        if (user.process.blocked) throw new Error("Your account blocked contact the admin")
         req.user = user
         req.token = token
         next()
