@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const homeController = require('../app/controller/home.controller')
-const logoutAuth = require('../middleware/loout.auth')
+const logoutAuth = require('../middleware/logut.auth')
 
 router.post('/register', homeController.postRegister)
 router.post('/login', homeController.postLogin)

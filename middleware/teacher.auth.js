@@ -9,6 +9,9 @@ const teacherAuth = async (req, res, next) => {
         let data = jwt.verify(newtoken, process.env.TOKENHASHSECRET)
         let user = await teacherModel.findOne({ _id: data._id, 'tokens.token': token })
         if (!user) throw new Error("you are not authorized")
+        if (!user.process.activationOTPStatus) throw new Error("Active Your account first")
+        if (!user.process.activationAdmin) throw new Error("Contact the admin for activate your account")
+        if (!user.process.blocked) throw new Error("Your account blocked contact the admin")
         req.user = user
         req.token = token
         next()
