@@ -7,12 +7,13 @@ class Student {
   //exams
   static postEditProfile = async (req, res) => {
     try {
-      let student = await studentModel.findByIdAndUpdate(
-        { _id: req.params.id }, req.body, { runValidators: true, new: true, });
-      // student.name = req.body.name || student.name
-      // student.email = req.body.email || student.email
+      // let student = await studentModel.findByIdAndUpdate(
+      //   { _id: req.params.id }, req.body, { runValidators: true, new: true, });
+      let student=req.user
+      student.name = req.body.name || student.name
+      student.email = req.body.email || student.email
       // student.password = await bycryptjs.hash(req.body.password, +process.env.PASSWORDHASH)
-      // student.save()
+      student.save()
       resData(res, 200, true, student, "update done Succsessfuly");
     } catch (e) {
       res.send(e.message);
