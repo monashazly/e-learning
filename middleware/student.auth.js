@@ -14,7 +14,7 @@ const studentAuth = async (req, res, next) => {
         next()
 
     } catch (e) {
-        resData(res, 500, true, e.message, 'faild to get this page')
+        resData(res, 500, true, e.message, 'failed to get this page')
     }
 }
 
