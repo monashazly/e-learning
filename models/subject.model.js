@@ -17,7 +17,7 @@ const subjectSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    used:{type:String,default:false},
+    used: { type: Boolean, default: false },
     videos: [
         {
             videoName: {

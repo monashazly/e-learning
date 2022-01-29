@@ -25,7 +25,7 @@ const login = async (req, res, table) => {
         let token = await user.GenerateToken()
         user.tokens.push({ token })
         await user.save()
-        resData(res, 200, true, token, 'logged in successfully')
+        resData(res, 200, true, { _id: user._id, token }, 'logged in successfully')
     } catch (e) {
         resData(res, 500, false, e.message, 'Error')
     }

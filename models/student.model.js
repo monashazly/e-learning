@@ -59,7 +59,6 @@ studentSchema.pre("save", async function () {
     const student = this
     if (student.isModified("password"))
         student.password = await bycryptjs.hash(student.password, parseInt(process.env.PASSWORDHASH))
-
 })
 //login function
 studentSchema.statics.login = async function (email, password) {
