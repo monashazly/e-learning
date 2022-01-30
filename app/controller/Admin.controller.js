@@ -87,7 +87,7 @@ class admin {
     static getActiveTeacher = async (req, res) => {
         try {
             let _id = req.params.id
-            let teacher = await teacherModel.findOneAndUpdate({ _id }, { activationAdmin: true })
+            let teacher = await teacherModel.findOneAndUpdate({ _id }, { 'process.activationAdmin': true })
             if (!teacher) return resData(res, 200, true, teacher, 'this teacher is not register make new account')
             if (teacher.activationAdmin === 'true') return resData(res, 200, true, teacher, 'this teacher is already active')
             resData(res, 200, true, teacher, 'this teacher actived successfuly')
@@ -99,7 +99,7 @@ class admin {
     static getBlockTeacher = async (req, res) => {
         try {
             let _id = req.params.id
-            let user = await teacherModel.findOneAndUpdate({ _id }, { blocked: true });
+            let user = await teacherModel.findOneAndUpdate({ _id }, { 'process.blocked': true });
             if (!user) return resData(res, 200, true, user, 'user is not valid')
             if (user.blocked) return resData(res, 200, true, user, 'Teacher is already Blocked')
             resData(res, 200, true, user, 'Teacher Blocked Successfuly')
@@ -110,7 +110,7 @@ class admin {
     static getBlockStudent = async (req, res) => {
         try {
             let _id = req.params.id
-            let user = await studentModel.findOneAndUpdate({ _id }, { blocked: true });
+            let user = await studentModel.findOneAndUpdate({ _id }, { 'process.blocked': true });
             if (!user) return resData(res, 200, true, user, 'user is not valid')
             if (user.blocked) return resData(res, 200, true, user, 'Student is already Blocked')
             resData(res, 200, true, user, 'Student Blocked Successfuly')
